@@ -13,10 +13,30 @@ exports.register = async(req, res) =>{
     const passHash = await bcryptjs.hash(password, 8)
     console.log(name +" - "+user+" - "+ phone+" - "+password)
     console.log("PASS_HASH: " +" - "+passHash+" - ")
-    conexion.query('INSERT INTO users SET ?', {user: name,  phone: phone,  name:user, pass:passHash}, (error, results) =>{
+    if(!user || !password || !phone || !name) {
+        res.render('login', {
+            alert:true,
+            alertTitle: "Advertencia",
+            alertMessage: "Por favor llene todos los campos. " ,
+            alertIcon:'warning',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login'
+        })
+    } else {    conexion.query('INSERT INTO users SET ?', {user: name,  phone: phone,  name:user, pass:passHash}, (error, results) =>{
 
-        if(error) { console.log(error) } res.redirect('/')
-    })
+        if(error) { console.log(error) } 
+        res.render('login', {
+            alert:true,
+            alertTitle: "Agente Registrado.",
+            alertMessage: "Registro Exitoso. " ,
+            alertIcon:'success',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login'
+        })
+        // res.redirect('/')
+    }) }
 
         
     } catch (error) {
@@ -69,7 +89,7 @@ exports.login = async (req, res) => {
             alert:true,
             alertTitle: "Advertencia: Login success",
             alertMessage: "Conectado con tu cuenta",
-            alertIcon:'info',
+            alertIcon:'success',
                         showConfirmButton: true,
                         timer: false,
                         ruta: ''
@@ -82,3 +102,27 @@ exports.login = async (req, res) => {
     } catch (error){ console.log(error)}
 }
 
+exports.isAuthenticated= async (req, res, next) => {
+
+    if (req.cookies.jwt){
+        try {
+            const decodedToken = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRETO)
+            conexion.query('SELECT * FROM USERS WHEN id = ',[decodedToken].id, (error, results) => {
+                if(!results){   return next()}
+                req.user = results[0]
+                return next()
+            }) 
+        } catch (error) {
+            console.log(error)
+            return next()
+        } 
+    }   else {
+        res.redirect('/login')
+        
+    }
+}
+
+exports.logout = (req, res) =>{
+    res.clearCookie('jwt')
+    return res.redirect('/')
+}

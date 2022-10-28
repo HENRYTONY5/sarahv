@@ -62,7 +62,24 @@
         </div>
     </div>
 
-
+    <% if(alert) { %>
+  
+        <script>
+          Swal.fire({
+            
+              title: '<%= alertTitle %>',
+              text: '<%= alertMessage %>',
+              icon: '<%= alertIcon %>',
+              showCancelButton: false,
+              timer: '2000',
+      
+          
+          }).then(( ) => {
+            window.location = '/<%= ruta %>'
+          })
+        </script>
+        
+        <% } %>
 </body>
 <script src="js/bootstrap.bundle.min.js"></script>
 
