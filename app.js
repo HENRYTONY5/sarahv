@@ -41,7 +41,7 @@ app.use('/', require('./routes/router'))
         
 // });
 
-    app.listen(3010, () =>{
-        console.log('http://localhost:3010')
+    app.listen(process.env.PORT, () =>{
+        console.log('http://localhost:',process.env.PORT)
     })
 
