@@ -9,11 +9,12 @@ exports.register = async(req, res) =>{
     const name = req.body.name
     const user = req.body.user
     const phone = req.body.phone
+    const rol = req.body.rol
     const password = req.body.pass
     const passHash = await bcryptjs.hash(password, 8)
     console.log(name +" - "+user+" - "+ phone+" - "+password)
     console.log("PASS_HASH: " +" - "+passHash+" - ")
-    if(!user || !password || !phone || !name) {
+    if(!user || !password || !phone || !name || !rol) {
         res.render('login', {
             alert:true,
             alertTitle: "Advertencia",
@@ -21,9 +22,9 @@ exports.register = async(req, res) =>{
             alertIcon:'warning',
             showConfirmButton: true,
             timer: false,
-            ruta: 'login'
+            ruta: 'register'
         })
-    } else {    conexion.query('INSERT INTO users SET ?', {user: name,  phone: phone,  name:user, pass:passHash}, (error, results) =>{
+    } else {    conexion.query('INSERT INTO users SET ?', {user: name,  phone: phone, name:user, pass:passHash, rol:rol}, (error, results) =>{
 
         if(error) { console.log(error) } 
         res.render('login', {
@@ -33,7 +34,7 @@ exports.register = async(req, res) =>{
             alertIcon:'success',
             showConfirmButton: true,
             timer: false,
-            ruta: 'login'
+            ruta: 'pages-register'
         })
         // res.redirect('/')
     }) }
@@ -117,12 +118,12 @@ exports.isAuthenticated= async (req, res, next) => {
             return next()
         } 
     }   else {
-        res.redirect('/login')
+        res.redirect('/indexadmin')
         
     }
 }
 
 exports.logout = (req, res) =>{
     res.clearCookie('jwt')
-    return res.redirect('/')
+    return res.redirect('/indexadmin')
 }

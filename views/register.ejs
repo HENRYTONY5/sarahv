@@ -46,11 +46,20 @@
                 <label  for="name" class="form-label">Usuario </label>
                 <input id = "user" name="user" type="text" class="form-control" placeholder="Nombre@Usuario ." maxlength="25">
                 </div>
-                
+                <div class="mb-3">
+                    <label  for="name" class="form-label">Permisos: </label>
+                    <select id="rol" name="rol" class="form-select"> 
+                        <option value="admin"selected> Admin</option>
+                        <option value="Agente_lider"> Agente Lider</option>
+                        <option value="Agente_Escritor" >Agente Escritor</option>
+                        <option value="Agente_Lector" >Agente Lector</option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label  for="name" class="form-label">Password: </label>
-                    <input id = "pass" name="pass" type="password" class="form-control" placeholder="Password." maxlength="10">
+                    <input id = "pass" name="pass"  class="form-control" placeholder="Password." maxlength="10">
                 </div>
+                
                 <div class="card-footer bg-trasparent borde-primary" >
                     <a href="/" type="button" class="btn btn-secondary">Cancelar </a>
                     <button type="submit" class="btn btn-primary">REGISTRAR </button>
@@ -82,5 +91,6 @@
         <% } %>
 </body>
 <script src="js/bootstrap.bundle.min.js"></script>
+
 
 </html>
