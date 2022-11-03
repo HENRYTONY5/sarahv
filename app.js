@@ -41,7 +41,7 @@ app.use('/', require('./routes/router'))
         
 // });
 
-    app.listen(process.env.PORT, () =>{
-        console.log('http://localhost:'+process.env.PORT)
+    app.listen(4000, () =>{
+        console.log('http://localhost:4000'+process.env.PORT)
     })
 
