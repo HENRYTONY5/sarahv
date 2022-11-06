@@ -41,10 +41,10 @@ app.use('/', require('./routes/router'))
         
 // });
     // ->F de produccion
-    app.listen(process.env.PORT, () =>{
-        console.log('http://localhost:'+process.env.PORT)
-    })
-// -> F local
-    // app.listen(5000, () =>{
-    //     console.log('http://localhost:5000')
+    // app.listen(process.env.PORT, () =>{
+    //     console.log('http://localhost:'+process.env.PORT)
     // })
+// -> F local
+    app.listen(5000, () =>{
+        console.log('http://localhost:5000')
+    })
